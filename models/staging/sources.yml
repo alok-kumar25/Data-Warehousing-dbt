@@ -1,0 +1,101 @@
+version: 2
+
+sources:
+  - name: raw
+    description: Raw Northwind data ingested into Snowflake
+    database: DE
+    schema: RAW
+
+    tables:
+
+      # =====================
+      # TRANSACTIONAL TABLES
+      # =====================
+
+      - name: orders
+        description: One row per order
+        columns:
+          - name: order_id
+          - name: customer_id
+          - name: employee_id
+          - name: order_date
+
+      - name: order_details
+        description: One row per product per order
+        columns:
+          - name: order_id
+          - name: product_id
+          - name: quantity
+
+      # =====================
+      # CORE DIMENSIONS
+      # =====================
+
+      - name: customers
+        description: Customer master data
+        columns:
+          - name: customer_id
+          - name: company_name
+          - name: country
+
+      - name: products
+        description: Product master data
+        columns:
+          - name: product_id
+          - name: product_name
+          - name: category_id
+          - name: supplier_id
+
+      - name: employees
+        description: Employee master data
+        columns:
+          - name: employee_id
+          - name: first_name
+          - name: last_name
+
+      - name: suppliers
+        description: Supplier master data
+        columns:
+          - name: supplier_id
+          - name: company_name
+          - name: country
+
+      - name: shippers
+        description: Shipping companies
+        columns:
+          - name: shipper_id
+          - name: company_name
+
+      - name: categories
+        description: Product categories
+        columns:
+          - name: category_id
+          - name: category_name
+
+      # =====================
+      # REFERENCE / MAPPING
+      # =====================
+
+      - name: employee_territories
+        description: Mapping between employees and territories
+        columns:
+          - name: employee_id
+          - name: territory_id
+
+      - name: territories
+        description: Sales territories
+        columns:
+          - name: territory_id
+          - name: region_id
+
+      - name: region
+        description: Sales regions
+        columns:
+          - name: region_id
+          - name: region_description
+
+      - name: us_states
+        description: US state reference table
+        columns:
+          - name: state_id
+          - name: state_name
